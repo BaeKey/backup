@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>PayloadContent</key>
+            <array>
+                <dict>
+                    <key>DefaultsData</key>
+                    <dict>
+                        <key>apns</key>
+                        <array>
+                            <dict>
+                                <key>apn</key>
+                                <string>ctwap</string>
+                                <key>password</key>
+                                <string>vnet.mobi</string>
+                                <key>proxy</key>
+                                <string>10.0.0.200</string>
+                                <key>proxyPort</key>
+                                <integer>80</integer>
+                                <key>username</key>
+                                <string>ctwap@mycdma.cn</string>
+                            </dict>
+                        </array>
+                    </dict>
+                    <key>DefaultsDomainName</key>
+                    <string>com.apple.managedCarrier</string>
+                </dict>
+            </array>
+            <key>PayloadDescription</key>
+            <string>Provides customization of carrier Access Point Name.</string>
+            <key>PayloadDisplayName</key>
+            <string>Advanced Settings</string>
+            <key>PayloadIdentifier</key>
+            <string>ctwap</string>
+            <key>PayloadOrganization</key>
+            <string></string>
+            <key>PayloadType</key>
+            <string>com.apple.apn.managed</string>
+            <key>PayloadUUID</key>
+            <string>90CC3736-EEEF-4C97-8FC3-D2218CD5E549</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>ctwap APN</string>
+    <key>PayloadDisplayName</key>
+    <string>ctwap</string>
+    <key>PayloadOrganization</key>
+    <string></string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadIdentifier</key>
+    <string>ctwap</string>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>68B9352A-845C-4697-A8CF-C02BB35427B0</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>
