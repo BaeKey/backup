@@ -1,4 +1,4 @@
---- file: lua/backend-baidu.lua
+--- file: lua/cloud189-backend-baidu.lua
 
 local http = require 'http'
 local backend = require 'backend'
