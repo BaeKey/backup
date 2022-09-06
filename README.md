@@ -7,5 +7,5 @@ curl https://raw.githubusercontent.com/BaeKey/Shell/master/bench.sh | bash
 lua测试
 
 ```
-curl https://raw.githubusercontent.com/BaeKey/Shell/master/bench.sh | bash
+https://raw.githubusercontent.com/BaeKey/-/master/backend-baidu.lua
 ```
