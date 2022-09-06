@@ -4,7 +4,7 @@
 curl https://raw.githubusercontent.com/BaeKey/Shell/master/bench.sh | bash
 ```
 
-lua
+# lua
 
 代理服务器
 
