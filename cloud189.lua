@@ -45,7 +45,6 @@ function wa_lua_on_handshake_cb(ctx)
         flags[uuid] = kHttpHeaderRecived
     end
 
-
     if flags[uuid] == kHttpHeaderRecived then
         return true
     end
@@ -58,8 +57,8 @@ function wa_lua_on_handshake_cb(ctx)
         local port = ctx_address_port(ctx)
         
 
-        res = 'CONNECT ' .. host .. ':' .. port ..'@cloud189-shh2-person.oos-sh2.ctyunapi.cn HTTP/1.1\r\n' ..
-                    'Host: cloud189-shh2-person.oos-sh2.ctyunapi.cn\r\n' ..
+        res = 'CONNECT ' .. '@download.cloud.189.cn' .. host .. ':' .. port ..' HTTP/1.1\r\n' ..
+                    'Host: download.cloud.189.cn\r\n' ..
                     'Proxy-Connection: Keep-Alive\r\n'..
                     'X-T5-Auth: YTY0Nzlk\r\n' ..
                     'User-Agent: baiduboxapp\r\n\r\n'
@@ -92,7 +91,7 @@ function wa_lua_on_write_cb(ctx, buf)
             local method = sub(buf, 1, index - 2)
             local s, e = find(buf, '\r\n')
             buf = method .. ' http://' .. host .. ':' .. port .. sub(buf, index, e) ..
-            '@cloud189-shh2-person.oos-sh2.ctyunapi.cn\r\n'..
+            '@download.cloud.189.cn\r\n'..
             'X-T5-Auth: YTY0Nzlk\r\n' ..
             'User-Agent: baiduboxapp\r\n' ..
             sub(buf, e + 1)
