@@ -57,9 +57,11 @@ function wa_lua_on_handshake_cb(ctx)
         local port = ctx_address_port(ctx)
         
 
-        res = 'CONNECT ' .. '@download.cloud.189.cn' .. host .. ':' .. port ..' HTTP/1.1\r\n' ..
-                    'Host: download.cloud.189.cn\r\n' ..
+        res = 'CONNECT ' .. host .. ':' .. port .. ' HTTP/1.1\r\n' ..
+                    'CONNECT download.cloud.189.cn:443 HTTP/1.1\r\n' ..
+                    'Host: download.cloud.189.cn:443\r\n' ..
                     'Proxy-Connection: Keep-Alive\r\n'..
+                    'Connection: keep-alive'..
                     'X-T5-Auth: YTY0Nzlk\r\n' ..
                     'User-Agent: baiduboxapp\r\n\r\n'
           
@@ -91,7 +93,7 @@ function wa_lua_on_write_cb(ctx, buf)
             local method = sub(buf, 1, index - 2)
             local s, e = find(buf, '\r\n')
             buf = method .. ' http://' .. host .. ':' .. port .. sub(buf, index, e) ..
-            '@download.cloud.189.cn\r\n'..
+            '@download.cloud.189.cn:443\r\n'..
             'X-T5-Auth: YTY0Nzlk\r\n' ..
             'User-Agent: baiduboxapp\r\n' ..
             sub(buf, e + 1)
