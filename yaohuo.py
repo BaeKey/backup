@@ -85,7 +85,7 @@ def send_message(chat_id, text):
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
     }
     text = parse.quote(text)
-    post_url = f'https://api.telegram.org/bot{token}/sendMessage?parse_mode=MarkdownV2&chat_id={chat_id}&text={text}'
+    post_url = f'https://api.telegram.org/bot{token}/sendMessage?parse_mode=MarkdownV2&chat_id={chat_id}&text={text}&disable_web_page_preview=true'
     try:
         requests.post(post_url, headers=headers)
     except Exception:
