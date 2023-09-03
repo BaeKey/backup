@@ -12,6 +12,8 @@ userid = "xxxxx"
 sidyaohuo = "xxxxx"
 # 刷新间隔/s
 refresh_time = 60
+# 关键词过滤
+keywords = ["关键词1", "关键词2", "关键词3"]
 
 # # 登录用户名
 # username = ""
@@ -124,8 +126,10 @@ def main():
                         current_datetime = time.strftime(
                             "%Y/%m/%d  %H:%M:%S", time.localtime())
                         content = get_content(url_list)
-                        text = f'主        题：*[{name}]({url_list})*\n时        间：{current_datetime}\n内容预览：{content}'
-                        send_message(userid, text)
+                        # 检查帖子内容是否包含关键词
+                        if any(keyword in content for keyword in keywords):
+                            text = f'主        题：*[{name}]({url_list})*\n时        间：{current_datetime}\n内容预览：{content}'
+                            send_message(userid, text)
                     else:
                         pass
                 else:
