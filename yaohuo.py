@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
+import time
 import requests
 from urllib import parse
 from lxml import etree
-import time
 
 # 替换为自己的Bot token
 token = "xxxxx"
@@ -12,14 +12,10 @@ userid = "xxxxx"
 sidyaohuo = "xxxxx"
 # 刷新间隔/s
 refresh_time = 60
-# 关键词过滤
-keywords = ["关键词1", "关键词2", "关键词3"]
+# 最大集合大小
+max_set_size = 100
 
-# # 登录用户名
-# username = ""
-# # 登录密码
-# password = ""
-
+# 请求头
 headers = {
     'Accept':
     'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -40,29 +36,10 @@ headers = {
     'sec-ch-ua-platform': '"Windows"',
 }
 
-cookies = {'sidyaohuo': sidyaohuo}
-
-# # 登录获取cookies
-# def get_cookies():
-#     data = {
-#     'logname': username,
-#     'logpass': password,
-#     'action': 'login',
-#     'classid': '0',
-#     'siteid': '1000',
-#     'sid': '-3-0-0-0-0',
-#     'backurl': 'bbs/list.aspx?siteid=1000&classid=201',
-#     'savesid': '0',
-#   }
-#     url= "https://yaohuo.me/waplogin.aspx"
-#     cookies=requests.post(url,headers=headers,data=data).cookies
-#     return cookies
-
-
 # 获取帖子内容并转换为Markdown格式
 def get_content(url):
     try:
-        response = requests.get(url, headers=headers, cookies=cookies)
+        response = requests.get(url, headers=headers)
         yaohuo_content = etree.HTML(response.content).xpath(
             '//div[@class="bbscontent"]//comment()[contains(., "listS")]/following-sibling::node()[following::comment()[contains(., "listE")]]'
         )
@@ -82,21 +59,17 @@ def get_content(url):
 
 # 发送消息
 def send_message(chat_id, text):
-    headers = {
-        'user-agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
-    }
     text = parse.quote(text)
     post_url = f'https://api.telegram.org/bot{token}/sendMessage?parse_mode=MarkdownV2&chat_id={chat_id}&text={text}&disable_web_page_preview=true'
     try:
         requests.post(post_url, headers=headers)
-    except Exception:
-        print("推送失败！")
+    except Exception as e:
+        print("推送失败:", e)
         time.sleep(3)
         try:
             requests.post(post_url, headers=headers)
-        except Exception:
-            pass
+        except Exception as e:
+            print("重试推送失败:", e)
 
 
 # 主程序
@@ -106,9 +79,7 @@ def main():
 
     while True:
         try:
-            response = requests.get(url_yaohuo,
-                                    headers=headers,
-                                    cookies=cookies)
+            response = requests.get(url_yaohuo, headers=headers)
             xml_content = etree.HTML(response.content)
             href_list = xml_content.xpath(
                 '//div[contains(@class, "listdata line")]/a[1]/@href')
@@ -120,18 +91,16 @@ def main():
             for i in range(len(reply_number)):
                 if reply_number[i] == '0':
                     if str(href[i]) not in yaohuo_list:
+                        if len(yaohuo_list) >= max_set_size:
+                            yaohuo_list.pop()
                         yaohuo_list.add(str(href[i]))
                         name = href[i]
                         url_list = f"https://yaohuo.me/{href_list[i]}"
                         current_datetime = time.strftime(
                             "%Y/%m/%d  %H:%M:%S", time.localtime())
                         content = get_content(url_list)
-                        # 检查帖子内容是否包含关键词
-                        if any(keyword in content for keyword in keywords):
-                            text = f'主        题：*[{name}]({url_list})*\n时        间：{current_datetime}\n内容预览：{content}'
-                            send_message(userid, text)
-                    else:
-                        pass
+                        text = f'主        题：*[{name}]({url_list})*\n时        间：{current_datetime}\n内容预览：{content}'
+                        send_message(userid, text)
                 else:
                     pass
             time.sleep(refresh_time)
