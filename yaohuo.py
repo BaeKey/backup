@@ -5,15 +5,17 @@ from urllib import parse
 from lxml import etree
 
 # 替换为自己的Bot token
-token = "xxxxx"
+token = "xxxxxx"
 # 替换为自己的用户ID
 userid = "xxxxx"
 # 替换为自己的sidyaohuo
-sidyaohuo = "xxxxx"
+sidyaohuo = "xxxxxxx"
 # 刷新间隔/s
-refresh_time = 60
+refresh_time = 20
 # 最大集合大小
 max_set_size = 100
+# 关键词过滤
+keywords = ["关键词1", "关键词2", "关键词3"]
 
 # 请求头
 headers = {
@@ -36,14 +38,13 @@ headers = {
     'sec-ch-ua-platform': '"Windows"',
 }
 
-cookies = {
-      'sidyaohuo': sidyaohuo
-}
+cookies = {'sidyaohuo': sidyaohuo}
+
 
 # 获取帖子内容并转换为Markdown格式
 def get_content(url):
     try:
-        response = requests.get(url, headers=headers,cookies=cookies)
+        response = requests.get(url, headers=headers, cookies=cookies)
         yaohuo_content = etree.HTML(response.content).xpath(
             '//div[@class="bbscontent"]//comment()[contains(., "listS")]/following-sibling::node()[following::comment()[contains(., "listE")]]'
         )
@@ -83,7 +84,9 @@ def main():
 
     while True:
         try:
-            response = requests.get(url_yaohuo, headers=headers,cookies=cookies)
+            response = requests.get(url_yaohuo,
+                                    headers=headers,
+                                    cookies=cookies)
             xml_content = etree.HTML(response.content)
             href_list = xml_content.xpath(
                 '//div[contains(@class, "listdata line")]/a[1]/@href')
@@ -91,7 +94,6 @@ def main():
                 '//div[contains(@class, "listdata line")]/a[2]/text()')
             href = xml_content.xpath(
                 '//div[contains(@class, "listdata line")]/a[1]/text()')
-
             for i in range(len(reply_number)):
                 if reply_number[i] == '0':
                     if str(href[i]) not in yaohuo_list:
@@ -103,8 +105,12 @@ def main():
                         current_datetime = time.strftime(
                             "%Y/%m/%d  %H:%M:%S", time.localtime())
                         content = get_content(url_list)
-                        text = f'主        题：*[{name}]({url_list})*\n时        间：{current_datetime}\n内容预览：{content}'
-                        send_message(userid, text)
+                        print(name)
+                        # 检查帖子内容是否包含关键词
+                        if any(keyword in content for keyword in keywords):
+                            print("包含关键词：" + name)
+                            text = f'主        题：*[{name}]({url_list})*\n时        间：{current_datetime}\n内容预览：{content}'
+                            send_message(userid, text)
                 else:
                     pass
             time.sleep(refresh_time)
