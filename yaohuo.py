@@ -36,10 +36,14 @@ headers = {
     'sec-ch-ua-platform': '"Windows"',
 }
 
+cookies = {
+      'sidyaohuo': sidyaohuo
+}
+
 # 获取帖子内容并转换为Markdown格式
 def get_content(url):
     try:
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers,cookies=cookies)
         yaohuo_content = etree.HTML(response.content).xpath(
             '//div[@class="bbscontent"]//comment()[contains(., "listS")]/following-sibling::node()[following::comment()[contains(., "listE")]]'
         )
@@ -79,7 +83,7 @@ def main():
 
     while True:
         try:
-            response = requests.get(url_yaohuo, headers=headers)
+            response = requests.get(url_yaohuo, headers=headers,cookies=cookies)
             xml_content = etree.HTML(response.content)
             href_list = xml_content.xpath(
                 '//div[contains(@class, "listdata line")]/a[1]/@href')
