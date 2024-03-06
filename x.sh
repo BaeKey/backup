@@ -14,5 +14,5 @@ echo "BBR配置完成。"
 
 echo "更新软件包列表并安装最新云内核"
 apt update
-apt autoremove --purge qemu-guest-agent
+apt autoremove --purge qemu-guest-agent -y
 apt install linux-image-cloud-amd64 -y
