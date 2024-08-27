@@ -21,5 +21,7 @@ echo "BBR配置完成,TCP网络协议配置完成"
 echo "更新软件包列表并安装最新云内核"
 apt update
 apt autoremove --purge qemu-guest-agent -y
-rmmod virtio_balloon
 apt install linux-image-cloud-amd64 -y
+
+echo "禁用内存超售模块"
+echo "blacklist virtio_balloon" | tee /etc/modprobe.d/blacklist.conf && update-initramfs -u
