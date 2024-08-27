@@ -21,4 +21,5 @@ echo "BBR配置完成,TCP网络协议配置完成"
 echo "更新软件包列表并安装最新云内核"
 apt update
 apt autoremove --purge qemu-guest-agent -y
+rmmod virtio_balloon
 apt install linux-image-cloud-amd64 -y
