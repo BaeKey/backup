@@ -5,7 +5,7 @@ mkdir -p ~/.ssh && chmod 700 ~/.ssh
 echo $SSH_KEY > ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
 sed -i 's/^#\?\(PasswordAuthentication \).*/\1no/' /etc/ssh/sshd_config
-sed -i 's/^#\?\(Port \).*/\1[ssh端口]/' /etc/ssh/sshd_config
+sed -i 's/^#\?\(Port \).*/\121112/' /etc/ssh/sshd_config
 echo "SSH公钥配置完成，root用户密码登录已被禁用。"
 
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
