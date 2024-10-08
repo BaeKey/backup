@@ -8,13 +8,14 @@ sed -i 's/^#\?\(PasswordAuthentication \).*/\1no/' /etc/ssh/sshd_config
 sed -i 's/^#\?\(Port \).*/\121112/' /etc/ssh/sshd_config
 echo "SSH公钥配置完成，root用户密码登录已被禁用。"
 
-echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_window_scaling = 1" >> /etc/sysctl.conf
+echo "net.core.default_qdisc= fq " >> /etc/sysctl.conf
+echo "net.ipv4.tcp_congestion_control= bbr " >> /etc/sysctl.conf
+echo "net.ipv4.tcp_window_scaling = 2" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_rmem = 4096 16384 23068672" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_wmem = 4096 16384 23068672" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_pacing_ca_ratio = 110" >> /etc/sysctl.conf
 echo "net.core.rmem_max = 33554432" >> /etc/sysctl.conf
 echo "net.core.wmem_max = 33554432" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_rmem = 4096 131072 33554432" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_wmem = 4096 16384 33554432" >> /etc/sysctl.conf
 
 sysctl -p
 echo "BBR配置完成,TCP网络协议配置完成"
