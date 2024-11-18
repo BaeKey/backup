@@ -11,8 +11,8 @@ echo "SSH公钥配置完成，root用户密码登录已被禁用。"
 echo "net.core.default_qdisc= fq " >> /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control= bbr " >> /etc/sysctl.conf
 echo "net.ipv4.tcp_window_scaling = 2" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_rmem = 4096 16384 23068672" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_wmem = 4096 16384 23068672" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_rmem = 4096 16384 11050000" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_wmem = 4096 87380 11050000" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_pacing_ca_ratio = 110" >> /etc/sysctl.conf
 echo "net.core.rmem_max = 33554432" >> /etc/sysctl.conf
 echo "net.core.wmem_max = 33554432" >> /etc/sysctl.conf
