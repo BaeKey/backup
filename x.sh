@@ -23,3 +23,7 @@ apt install linux-image-cloud-amd64 -y
 
 echo "禁用内存超售模块"
 echo "blacklist virtio_balloon" | tee /etc/modprobe.d/blacklist.conf && update-initramfs -u
+
+echo "只保留最近8条命令记录"
+echo "export HISTSIZE=8" | tee -a /etc/profile
+echo "export HISTFILESIZE=8" | tee -a /etc/profile
